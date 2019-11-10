@@ -36,4 +36,5 @@ public interface CarComponent {
     // Field injection is useful for framework types that the Android system instantiates.
     // Each activity that we want to use needs to be injected separately into the CarComponent.
     void inject(MainActivity mainActivity);
+    
 }
