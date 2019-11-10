@@ -10,7 +10,9 @@ public class Car {
     private Engine engine;
     private Wheels wheels;
     
-    // Dagger will create this object for us.
+    // Constructor injection
+    // Dagger will know how to create this object for us,
+    // as long as Engine and Wheels also have constructor injection.
     @Inject
     public Car(Engine engine, Wheels wheels) {
         this.engine = engine;

@@ -2,11 +2,13 @@ package com.mkemp.dagger2example;
 
 import android.os.Bundle;
 
+import javax.inject.Inject;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     
-    private Car car;
+    @Inject Car fieldInjectedCar; // This is allowed because MainActivity is injected
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,8 +16,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     
         CarComponent component = DaggerCarComponent.create();
-        car = component.getCar();
-        car.drive();
+        component.inject(this); // Allow for field injection
+        fieldInjectedCar.drive();
+        
+        Car provisionCar = component.getNewCar(); // Get new car through provision method
+        provisionCar.drive();
         
     }
 }
