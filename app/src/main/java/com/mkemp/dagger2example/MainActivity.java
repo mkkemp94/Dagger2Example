@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     
-    @Inject Car fieldInjectedCar; // This is allowed because MainActivity is injected
+    // This is allowed when MainActivity is injected
+    // (Dagger does this 2nd)
+    @Inject Car fieldInjectedCar;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,11 +18,32 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     
         CarComponent component = DaggerCarComponent.create();
+        
+        //region Field Injection
+        
+        // Inject activity so that field and method injection can be executed.
+        // Activity must first be injected before field and method injection can be executed.
+        // Constructor injection would allow for these to happen automatically,
+        // but there is no constructor in android framework classes!
+        // See the Car class for constructor injection.
+        // (Dagger does this 1st)
         component.inject(this); // Allow for field injection
         fieldInjectedCar.drive();
+    
+        //endregion
+        //region Provides
         
-        Car provisionCar = component.getNewCar(); // Get new car through provision method
+        // Get a new car through provision method.
+        // This seems to be the simplest way to use Dagger,
+        // but it gets less efficient as the project gets bigger.
+        Car provisionCar = component.getNewCar();
         provisionCar.drive();
         
+        //endregion
+        
     }
+    
+    // (If there were any methods to be injected, Dagger would do this 3rd)
+    // (Usually you don't do method injection in activities)
+    
 }
