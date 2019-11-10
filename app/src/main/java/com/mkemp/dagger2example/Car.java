@@ -13,6 +13,7 @@ public class Car {
     private Wheels wheels;
     
     // Constructor injection (Dagger does this 1st)
+    // One way to teach Dagger how to create objects.
     // Dagger knows how to create this object for us,
     // as long as Engine and Wheels also have constructor injection.
     // Constructor injection allows for automatic field and method injection.

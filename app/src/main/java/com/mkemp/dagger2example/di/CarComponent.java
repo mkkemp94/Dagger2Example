@@ -1,4 +1,7 @@
-package com.mkemp.dagger2example;
+package com.mkemp.dagger2example.di;
+
+import com.mkemp.dagger2example.Car;
+import com.mkemp.dagger2example.MainActivity;
 
 import dagger.Component;
 
@@ -8,7 +11,11 @@ import dagger.Component;
  * This is what generates objects that other classes can use.
  * At compile time Dagger will implement this interface and create all the necessary code.
  */
-@Component
+@Component (modules =
+        // Whenever Dagger needs Wheels, Rims, or Tires,
+        // it can get them from this Wheels module.
+        WheelsModule.class
+)
 public interface CarComponent {
     
     // Provision Method:
@@ -18,6 +25,9 @@ public interface CarComponent {
     // Dagger can now generate everything.
     // Call this to get a new car.
     Car getNewCar();
+    // ...
+    // Car itself could come from a module,
+    // but this is not necessary because we have an @Inject-annotated constructor.
     
     // Field Injection:
     // Dagger can inject directly into MainActivity's fields.

@@ -2,6 +2,9 @@ package com.mkemp.dagger2example;
 
 import android.os.Bundle;
 
+import com.mkemp.dagger2example.di.CarComponent;
+import com.mkemp.dagger2example.di.DaggerCarComponent;
+
 import javax.inject.Inject;
 
 import androidx.appcompat.app.AppCompatActivity;
