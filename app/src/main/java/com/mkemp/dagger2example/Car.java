@@ -32,6 +32,12 @@ public class Car {
     }
     
     void drive() {
+        
+        // Note that engine is now an interface,
+        // so Car has no idea whether it's getting a Petrol or Diesel engine.
+        // We have different log messages in each Engine object, so that will tell us which one we're using.
+        // The type of engine to use is defined in the module list of CarComponent.
+        engine.start();
         Log.d(TAG, "Driving...");
     }
 }

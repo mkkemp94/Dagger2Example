@@ -1,12 +1,7 @@
 package com.mkemp.dagger2example;
 
-import javax.inject.Inject;
-
-public class Engine {
-    
-    // Dagger will create this object for us.
-    @Inject
-    public Engine() {
-    
-    }
+// This is now an interface.
+// We'll need implementations of this to pass to Car.
+public interface Engine {
+    void start();
 }
