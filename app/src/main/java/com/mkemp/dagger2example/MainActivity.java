@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import com.mkemp.dagger2example.di.CarComponent;
 import com.mkemp.dagger2example.di.DaggerCarComponent;
-import com.mkemp.dagger2example.di.DieselEngineModule;
 
 import javax.inject.Inject;
 
@@ -22,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     
         CarComponent component = DaggerCarComponent.builder()
-                // Pass horsepower to module at runtime.
-                .dieselEngineModule(new DieselEngineModule(100))
+                .horsePower(150) // the builder we defined only expects horsepower and engine calls
+                .engineCapacity(1350) // both must be set here
                 .build();
         
         //region Field Injection

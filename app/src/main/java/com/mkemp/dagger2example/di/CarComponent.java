@@ -3,6 +3,9 @@ package com.mkemp.dagger2example.di;
 import com.mkemp.dagger2example.Car;
 import com.mkemp.dagger2example.MainActivity;
 
+import javax.inject.Named;
+
+import dagger.BindsInstance;
 import dagger.Component;
 
 /**
@@ -21,7 +24,7 @@ import dagger.Component;
         // The Engine can be either Diesel or Petrol.
         // We can swap which to use here, but can't use both or Dagger won't know which to use.
         // Possible expansions for testing could include a fake EngineModule or WheelsModule
-        DieselEngineModule.class
+        PetrolEngineModule.class
 })
 public interface CarComponent {
     
@@ -43,4 +46,17 @@ public interface CarComponent {
     // Field injection is useful for framework types that the Android system instantiates.
     // Each activity that we want to use needs to be injected separately into the CarComponent.
     void inject(MainActivity mainActivity);
+    
+    // Define the API for our CarComponent ourselves.
+    @Component.Builder
+    interface Builder {
+        
+        @BindsInstance // bind instance to type
+        Builder horsePower(@Named("horse power") int horsePower);
+    
+        @BindsInstance // use @Named to allow for more instances of the same type
+        Builder engineCapacity(@Named("engine capacity") int engineCapacity);
+        
+        CarComponent build();
+    }
 }
