@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
     
     // This is allowed when MainActivity is injected
     // (Dagger does this 2nd)
-    @Inject Car fieldInjectedCar;
+    @Inject Car fieldInjectedCar1, fieldInjectedCar2;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
         // See the Car class for constructor injection.
         // (Dagger does this 1st)
         component.inject(this); // Allow for field injection
-        fieldInjectedCar.drive();
+        fieldInjectedCar1.drive();
+        fieldInjectedCar2.drive();
     
         //endregion
         //region Provides

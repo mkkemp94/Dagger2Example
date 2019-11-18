@@ -11,6 +11,7 @@ public class Car {
     // (As long as constructor injection exists, this can be done without any additional steps)
     private Engine engine;
     private Wheels wheels;
+    private Driver driver;
     
     // Constructor injection (Dagger does this 1st)
     // One way to teach Dagger how to create objects.
@@ -18,7 +19,8 @@ public class Car {
     // as long as Engine and Wheels also have constructor injection.
     // Constructor injection allows for automatic field and method injection.
     @Inject
-    public Car(Engine engine, Wheels wheels) {
+    public Car(Driver driver, Engine engine, Wheels wheels) {
+        this.driver = driver;
         this.engine = engine;
         this.wheels = wheels;
     }
@@ -38,6 +40,6 @@ public class Car {
         // We have different log messages in each Engine object, so that will tell us which one we're using.
         // The type of engine to use is defined in the module list of CarComponent.
         engine.start();
-        Log.d(TAG, "Driving...");
+        Log.d(TAG, driver + " drives... " + this);
     }
 }

@@ -4,6 +4,7 @@ import com.mkemp.dagger2example.Car;
 import com.mkemp.dagger2example.MainActivity;
 
 import javax.inject.Named;
+import javax.inject.Singleton;
 
 import dagger.BindsInstance;
 import dagger.Component;
@@ -14,6 +15,7 @@ import dagger.Component;
  * This is what generates objects that other classes can use.
  * At compile time Dagger will implement this interface and create all the necessary code.
  */
+@Singleton
 @Component (modules = {
         // Whenever Dagger needs Wheels, Rims, or Tires,
         // it can get them from this Wheels module.
