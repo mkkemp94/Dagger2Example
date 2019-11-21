@@ -1,9 +1,15 @@
-package com.mkemp.dagger2example;
+package com.mkemp.dagger2example.di.car;
 
 import android.util.Log;
 
+import com.mkemp.dagger2example.Engine;
+import com.mkemp.dagger2example.Wheels;
+import com.mkemp.dagger2example.application.driver.Driver;
+import com.mkemp.dagger2example.di.ActivityScope;
+
 import javax.inject.Inject;
 
+@ActivityScope
 public class Car {
     private static final String TAG = "Car";
    
@@ -33,12 +39,12 @@ public class Car {
         remote.setListener(this);
     }
     
-    void drive() {
+    public void drive() {
         
         // Note that engine is now an interface,
         // so Car has no idea whether it's getting a Petrol or Diesel engine.
         // We have different log messages in each Engine object, so that will tell us which one we're using.
-        // The type of engine to use is defined in the module list of CarComponent.
+        // The type of engine to use is defined in the module list of ActivityComponent.
         engine.start();
         Log.d(TAG, driver + " drives... " + this);
     }

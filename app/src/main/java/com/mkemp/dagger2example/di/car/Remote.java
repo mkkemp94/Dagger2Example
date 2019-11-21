@@ -1,4 +1,4 @@
-package com.mkemp.dagger2example;
+package com.mkemp.dagger2example.di.car;
 
 import android.util.Log;
 

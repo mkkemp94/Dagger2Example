@@ -1,10 +1,10 @@
 package com.mkemp.dagger2example.di;
 
-import com.mkemp.dagger2example.Car;
 import com.mkemp.dagger2example.MainActivity;
+import com.mkemp.dagger2example.application.AppComponent;
+import com.mkemp.dagger2example.di.car.Car;
 
 import javax.inject.Named;
-import javax.inject.Singleton;
 
 import dagger.BindsInstance;
 import dagger.Component;
@@ -15,20 +15,22 @@ import dagger.Component;
  * This is what generates objects that other classes can use.
  * At compile time Dagger will implement this interface and create all the necessary code.
  */
-@Singleton
-@Component (modules = {
-        // Whenever Dagger needs Wheels, Rims, or Tires,
-        // it can get them from this Wheels module.
-        WheelsModule.class,
-        
-        // Whenever Dagger need to create an Engine, which is now an interface,
-        // it can look at its modules for how to create the engine.
-        // The Engine can be either Diesel or Petrol.
-        // We can swap which to use here, but can't use both or Dagger won't know which to use.
-        // Possible expansions for testing could include a fake EngineModule or WheelsModule
-        PetrolEngineModule.class
-})
-public interface CarComponent {
+@ActivityScope // Only a "Singleton" for this Component
+@Component (
+        dependencies = AppComponent.class,
+        modules = {
+            // Whenever Dagger needs Wheels, Rims, or Tires,
+            // it can get them from this Wheels module.
+            WheelsModule.class,
+            
+            // Whenever Dagger need to create an Engine, which is now an interface,
+            // it can look at its modules for how to create the engine.
+            // The Engine can be either Diesel or Petrol.
+            // We can swap which to use here, but can't use both or Dagger won't know which to use.
+            // Possible expansions for testing could include a fake EngineModule or WheelsModule
+            PetrolEngineModule.class
+        })
+public interface ActivityComponent {
     
     // Provision Method:
     // Dagger can make a Car because its constructor is annotated with @Inject.
@@ -46,10 +48,10 @@ public interface CarComponent {
     // This can only be done with fields annotated with @Inject.
     // Constructor injection is preferred but we don't create our MainActivity object.
     // Field injection is useful for framework types that the Android system instantiates.
-    // Each activity that we want to use needs to be injected separately into the CarComponent.
+    // Each activity that we want to use needs to be injected separately into the ActivityComponent.
     void inject(MainActivity mainActivity);
     
-    // Define the API for our CarComponent ourselves.
+    // Define the API for our ActivityComponent ourselves.
     @Component.Builder
     interface Builder {
         
@@ -59,6 +61,9 @@ public interface CarComponent {
         @BindsInstance // use @Named to allow for more instances of the same type
         Builder engineCapacity(@Named("engine capacity") int engineCapacity);
         
-        CarComponent build();
+        // Because this is a custom builder, we need to specify how tell this Component about the AppComponent.
+        Builder appComponent(AppComponent component);
+        
+        ActivityComponent build();
     }
 }

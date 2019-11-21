@@ -2,8 +2,10 @@ package com.mkemp.dagger2example;
 
 import android.os.Bundle;
 
-import com.mkemp.dagger2example.di.CarComponent;
-import com.mkemp.dagger2example.di.DaggerCarComponent;
+import com.mkemp.dagger2example.application.ExampleApp;
+import com.mkemp.dagger2example.di.ActivityComponent;
+import com.mkemp.dagger2example.di.DaggerActivityComponent;
+import com.mkemp.dagger2example.di.car.Car;
 
 import javax.inject.Inject;
 
@@ -20,9 +22,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     
-        CarComponent component = DaggerCarComponent.builder()
+        ActivityComponent component = DaggerActivityComponent
+                .builder()
                 .horsePower(150) // the builder we defined only expects horsepower and engine calls
                 .engineCapacity(1350) // both must be set here
+                
+                // Because custom builder, tell the ActivityComponent how to get the AppComponent.
+                .appComponent(((ExampleApp) getApplication()).getAppComponent())
+                
                 .build();
         
         //region Field Injection
